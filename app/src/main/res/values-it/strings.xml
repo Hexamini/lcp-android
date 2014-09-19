@@ -1,10 +1,9 @@
 <resources>
-
     <string name="action_settings">Impostazioni</string>
     <string name="app_name">LCp</string>
     <string name="welcome">Benvenuto!</string>
     <string name="sequent_simbol"> |- </string>
     <string name="type_something">Scrivi qualcosa...</string>
     <string name="calculate_result">Calcola!</string>
-
+    <string name="introduction_main">Per iniziare, inserisci nei campi apposito il tuo sequente. Infine, premi il bottone \"Calcola!\" per ottenere la soluzione.</string>
 </resources>

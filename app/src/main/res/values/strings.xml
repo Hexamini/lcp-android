@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">LCp</string>
     <string name="action_settings">Settings</string>
     <string name="welcome">Welcome!</string>
     <string name="sequent_simbol"> |- </string>
     <string name="type_something">Type something...</string>
-    <string name="calculate_result">Go!</string>
+    <string name="calculate_result">Calculate!</string>
+    <string name="introduction_main">For start, type below your sequents. Then, press \"Calculate!\" button in order to get the solution.</string>
 
 </resources>

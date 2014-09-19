@@ -15,7 +15,8 @@
         android:id="@+id/textView"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textSize="@dimen/abc_action_bar_progress_bar_size" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -28,7 +29,7 @@
         android:layout_toLeftOf="@+id/textView2"
         android:layout_toStartOf="@+id/textView2"
         android:inputType="textNoSuggestions"
-        android:textSize="20dp"
+        android:textSize="@dimen/hint_main"
         android:hint="@string/type_something"
         android:textColor="#ff787878" />
 
@@ -42,7 +43,7 @@
         android:layout_toRightOf="@+id/textView2"
         android:layout_toEndOf="@+id/textView2"
         android:inputType="textNoSuggestions"
-        android:textSize="20dp"
+        android:textSize="@dimen/hint_main"
         android:textColor="#ff787878"
         android:hint="@string/type_something" />
 
@@ -59,7 +60,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/calculate_result"
-        android:id="@+id/button"
+        android:id="@+id/calculate_button"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/introduction_main"
+        android:id="@+id/introduction"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/seqDx"
+        android:layout_alignRight="@+id/seqDx"
+        android:layout_alignEnd="@+id/seqDx"
+        android:textSize="@dimen/hint_main" />
 </RelativeLayout>
