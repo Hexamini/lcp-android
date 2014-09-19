@@ -1,4 +1,4 @@
-package it.hexamini.lcp.lcputility;
+package it.hexamini.lcp.lcputility.solve;
 
 public class Derivate
 {

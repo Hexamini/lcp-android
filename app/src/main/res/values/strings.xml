@@ -7,5 +7,6 @@
     <string name="type_something">Type something...</string>
     <string name="calculate_result">Calculate!</string>
     <string name="introduction_main">For start, type below your sequents. Then, press \"Calculate!\" button in order to get the solution.</string>
+    <string name="btn_calculate_working">I\'m working...</string>
 
 </resources>
