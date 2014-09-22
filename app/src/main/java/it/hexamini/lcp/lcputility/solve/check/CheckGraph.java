@@ -754,6 +754,8 @@ public class CheckGraph
 
     public boolean isCorrect( String seq )
     {
+        if (seq.isEmpty()) //se la stringa è vuota ritorno true senza alcun controllo
+            return true;
         boolean matching = false;
 
         //Verifica se le parentesi aperte sono state chiuse correttamente
