@@ -53,19 +53,16 @@ public class MainPActivity extends ActionBarActivity {
         //importo i dati su stringhe
         String inputSeqSx= seqSx.getText().toString();
         String inputSeqDx= seqDx.getText().toString();
-        if (controlInput.isCorrect(inputSeqSx))
+        if (!inputSeqSx.isEmpty() || !inputSeqDx.isEmpty()) //almeno uno dei due non deve essere vuoto
         {
-            if (controlInput.isCorrect(inputSeqDx))
-            {
-                //gli input sono corretti e si passa alla vera computazione del sequente
-                changeButtonText(R.id.btn_calculate_button, R.string.btn_calculate_working); //cambio il testo del bottone
-            }
-            else{
-                changeEditTextColor(R.id.seqDx, "#ff0000"); //coloro l'edittext di rosso
-            }
-        }
-        else{
-            changeEditTextColor(R.id.seqSx, "#ff0000"); //coloro l'edittext di rosso
+            if (controlInput.isCorrect(inputSeqSx)) {
+                if (controlInput.isCorrect(inputSeqDx)) {
+                    //gli input sono corretti e si passa alla vera computazione del sequente
+                    changeButtonText(R.id.btn_calculate_button, R.string.btn_calculate_working); //cambio il testo del bottone
+                } else
+                    changeEditTextColor(R.id.seqDx, "#ff0000"); //coloro l'edittext di rosso
+            } else
+                changeEditTextColor(R.id.seqSx, "#ff0000"); //coloro l'edittext di rosso
         }
     }
 
