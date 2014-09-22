@@ -62,11 +62,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/calculate_result"
-        android:id="@+id/calculate_button"
+        android:id="@+id/btn_calculate_button"
+        android:layout_marginTop="47dp"
+        android:onClick="clickCalculateButton"
         android:layout_below="@+id/seqSx"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="112dp"
-        android:onClick="clickCalculateButton"/>
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -80,4 +80,16 @@
         android:layout_alignEnd="@+id/seqDx"
         android:textSize="@dimen/hint_main"
         android:layout_above="@+id/seqDx" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/reset"
+        android:id="@+id/reset_button"
+        android:layout_toEndOf="@+id/btn_calculate_button"
+        android:layout_below="@+id/btn_calculate_button"
+        android:layout_alignRight="@+id/introduction"
+        android:layout_alignEnd="@+id/introduction"
+        android:layout_toRightOf="@+id/btn_calculate_button"
+        android:onClick="clickResetButton"/>
 </RelativeLayout>

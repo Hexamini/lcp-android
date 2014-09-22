@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import it.hexamini.lcp.lcputility.solve.check.CheckGraph;
 
 
 public class MainPActivity extends ActionBarActivity {
@@ -41,20 +42,56 @@ public class MainPActivity extends ActionBarActivity {
     }
 
     public void clickCalculateButton(View v) {
-        Button calculateButton = (Button) findViewById(R.id.calculate_button); //creo l'oggetto
         /**
          * Codice per verificare l'inserimento dei sequenti. Il colore dell'edittext sarà rosso se
          * è presente un errore nel codice.
          */
-        changeEditTextColor(R.id.seqSx, "#ff0000");
-        changeEditTextColor(R.id.seqDx, "#ff0000");
-        calculateButton.setText(R.string.btn_calculate_working);
+        CheckGraph controlInput;
+        controlInput = new CheckGraph();
+        EditText seqSx= (EditText) findViewById(R.id.seqSx);
+        EditText seqDx= (EditText) findViewById(R.id.seqDx);
+        //importo i dati su stringhe
+        String inputSeqSx= seqSx.getText().toString();
+        String inputSeqDx= seqDx.getText().toString();
+        if (controlInput.isCorrect(inputSeqSx))
+        {
+            if (controlInput.isCorrect(inputSeqDx))
+            {
+                //gli input sono corretti e si passa alla vera computazione del sequente
+                changeButtonText(R.id.btn_calculate_button, R.string.btn_calculate_working); //cambio il testo del bottone
+            }
+            else{
+                changeEditTextColor(R.id.seqDx, "#ff0000"); //coloro l'edittext di rosso
+            }
+        }
+        else{
+            changeEditTextColor(R.id.seqSx, "#ff0000"); //coloro l'edittext di rosso
+        }
+    }
+
+    public void clickResetButton(View v){
+        /**
+         * Alla pressione di questo bottone gli edittext ritorneranno a essere vuoti
+         */
+        EditText seqSx= (EditText) findViewById(R.id.seqSx);
+        EditText seqDx= (EditText) findViewById(R.id.seqDx);
+        seqSx.setText(""); //svuoto entrambi gli edittext, li resetto
+        seqDx.setText("");
+        changeEditTextColor(R.id.seqSx, "#808080"); //corrisponde a #ff787878 di android
+        changeEditTextColor(R.id.seqDx, "#808080");
+        changeButtonText(R.id.btn_calculate_button, R.string.calculate_result); //ripristino il testo originale del bottone
     }
 
     private void changeEditTextColor(int id, String color) {
         EditText et = (EditText) findViewById(id);
         // setto il colore usando l'rgb
         et.setTextColor(Color.parseColor(color));
+    }
+
+    private void changeButtonText (int id, int idText) {
+        Button changeName= (Button) findViewById(id);
+        //cambio il testo del bottone con quello passato nella variabile idText
+        changeName.setText(idText);
     }
 
 }

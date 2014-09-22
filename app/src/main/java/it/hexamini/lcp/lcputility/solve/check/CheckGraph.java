@@ -752,7 +752,7 @@ public class CheckGraph
         variable.except( "[-]" );
     }
 
-    public boolean check( String seq )
+    public boolean isCorrect( String seq )
     {
         boolean matching = false;
 

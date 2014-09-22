@@ -8,5 +8,6 @@
     <string name="calculate_result">Calculate!</string>
     <string name="introduction_main">For start, type below your sequents. Then, press \"Calculate!\" button in order to get the solution.</string>
     <string name="btn_calculate_working">I\'m working...</string>
+    <string name="reset">Reset</string>
 
 </resources>
