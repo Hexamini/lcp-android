@@ -726,7 +726,7 @@ public class CheckGraph
      */
     public CheckGraph()
     {
-        operator = new Nodo( "[&->v]" );
+        operator = new Nodo( "[&\\-\\>v]" );
         phrClose = new Nodo( "[)]" );
         phrOpen = new Nodo( "[(]");
         variable = new Nodo( "[A-Z]" );
@@ -735,7 +735,7 @@ public class CheckGraph
         operator.addLink( variable );
         operator.addLink( operator );
         //Caratteri non validi
-        operator.except( "[&>v]" );
+        operator.except( "[&\\>v]" );
 
         phrClose.addLink( phrClose );
         phrClose.addLink( operator );
@@ -745,11 +745,11 @@ public class CheckGraph
         phrOpen.addLink( variable );
         phrOpen.addLink( operator );
         //Caratteri non validi
-        phrOpen.except( "[&>v]" );
+        phrOpen.except( "[&\\>v]" );
 
         variable.addLink( phrClose );
         variable.addLink( operator );
-        variable.except( "[-]" );
+        variable.except( "[-]" ); //!#$%'*+,./:;<=?@\[\]^_`{|}~
     }
 
     public boolean isCorrect( String seq )
