@@ -92,4 +92,5 @@
         android:layout_alignEnd="@+id/introduction"
         android:layout_toRightOf="@+id/btn_calculate_button"
         android:onClick="clickResetButton"/>
+
 </RelativeLayout>

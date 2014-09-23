@@ -8,10 +8,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import it.hexamini.lcp.lcputility.solve.Tree;
 import it.hexamini.lcp.lcputility.solve.check.CheckGraph;
+import it.hexamini.lcp.lcputility.solve.Solve;
 
 
-public class MainPActivity extends ActionBarActivity {
+public class MainPActivity extends ActionBarActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +63,9 @@ public class MainPActivity extends ActionBarActivity {
                 if (controlInput.isCorrect(inputSeqDx)) {
                     //gli input sono corretti e si passa alla vera computazione del sequente
                     changeButtonText(R.id.btn_calculate_button, R.string.btn_calculate_working); //cambio il testo del bottone
+                    //Dichiaro l'oggetto solve
+                    Solve solution=new Solve(inputSeqSx, inputSeqDx);
+                    //Nuovo thread activity e nuovo tread per solution.treeLeaf
                 } else
                     changeEditTextColor(R.id.seqDx, "#ff0000"); //coloro l'edittext di rosso
             } else
@@ -90,5 +97,4 @@ public class MainPActivity extends ActionBarActivity {
         //cambio il testo del bottone con quello passato nella variabile idText
         changeName.setText(idText);
     }
-
 }
