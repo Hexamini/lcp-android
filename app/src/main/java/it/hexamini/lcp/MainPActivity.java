@@ -15,7 +15,7 @@ import it.hexamini.lcp.lcputility.solve.check.CheckGraph;
 import it.hexamini.lcp.lcputility.solve.Solve;
 
 
-public class MainPActivity extends ActionBarActivity{
+public class MainPActivity extends ActionBarActivity implements Runnable{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,10 +62,12 @@ public class MainPActivity extends ActionBarActivity{
             if (controlInput.isCorrect(inputSeqSx)) {
                 if (controlInput.isCorrect(inputSeqDx)) {
                     //gli input sono corretti e si passa alla vera computazione del sequente
-                    changeButtonText(R.id.btn_calculate_button, R.string.btn_calculate_working); //cambio il testo del bottone
-                    //Dichiaro l'oggetto solve
-                    Solve solution=new Solve(inputSeqSx, inputSeqDx);
-                    //Nuovo thread activity e nuovo tread per solution.treeLeaf
+                    Thread solveSeq= Thread.currentThread(); //creo un thread per il main principale
+                    Thread madeActivity= new Thread(this, "Activity Risultato");
+                    //avvio il thread che creerà la nuova Activity
+                    madeActivity.start();
+
+                    madeSolution(inputSeqSx, inputSeqDx); //questo creerà solve e risolverà il sequente
                 } else
                     changeEditTextColor(R.id.seqDx, "#ff0000"); //coloro l'edittext di rosso
             } else
@@ -97,4 +99,31 @@ public class MainPActivity extends ActionBarActivity{
         //cambio il testo del bottone con quello passato nella variabile idText
         changeName.setText(idText);
     }
+
+    private void madeSolution(String inputSeqSx, String inputSeqDx){
+        //Dichiaro l'oggetto solve
+        Solve solution=new Solve(inputSeqSx, inputSeqDx);
+        solution.treeLeaf(); //ottengo il risultato.
+    }
+
+    /** Gestione dei thread. In questo caso il thread è unico in quanto facciamo solo uno sdoppiamento
+     * per velocizzare la creazione della nuova activity e la computazione del sequente, che a volte può
+     * richiedere del tempo, così rendiamo più efficente la cosa.
+     */
+    @Override
+    public void run (){
+        changeButtonText(R.id.btn_calculate_button, R.string.btn_calculate_working); //cambio il testo del bottone
+        /**Implemento il codice per una nuova activity. Una volta creata una nuova activity
+         * questa si dovrà mettere in attesa finchè la computazione del sequente non è terminata.
+         */
+    }
 }
+
+
+/**
+ * Nota Bene: secondo me i thread andrebbero invertiti, il thread principale dovrebbe creare
+ * la nuova activity, quello secondario dovrebbe semplicemente risolvere il sequente. Logicamente
+ * parlando, a mio avviso, sarebbe meglio così, perchè alla fine del thread secondario rimarrebbe
+ * quello principale che ha creato appunto l'activity con stampato il risultato. Il problema è che
+ * non saprei come passare le stringhe dell'input destro e sinistro.
+ */
