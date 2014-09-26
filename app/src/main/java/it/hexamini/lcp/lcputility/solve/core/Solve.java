@@ -812,7 +812,7 @@ public class Solve implements Runnable
             index = indexSequent;
             reader = false;
 //Sveglio i thread in attesa di andare in esecuzione
-            notify();
+            ((Object)this).notify();
         }
         derThree( sequents.get( index ).prSx, sequents.get( index ).prDx, index );
     }
@@ -991,7 +991,7 @@ public class Solve implements Runnable
     }
     private synchronized void creaRamo( ArrayList<String> sx, ArrayList<String> dx, String s, int verso, int idThreadCalled )
     {
-        try{ while( reader ) wait(); }
+        try{ while( reader ) ((Object)this).wait(); }
         catch( Exception e ){}
 //Prenoto la lettura dell'array sequents
         reader = true;
