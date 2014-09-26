@@ -10,7 +10,6 @@
     <string name="introduction_main">For start, type below your sequents. Then, press \"Calculate!\" button in order to get the solution.</string>
     <string name="btn_calculate_working">I\'m working...</string>
     <string name="reset">Reset</string>
-    <string name="title_activity_canvas_solve_p">CanvasSolvePActivity</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_canvas_solve_p">Result - LCp</string>
 
 </resources>

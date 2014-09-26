@@ -8,4 +8,5 @@
     <string name="introduction_main">Per iniziare, inserisci nei campi apposito il tuo sequente. Infine, premi il bottone \"Calcola!\" per ottenere la soluzione.</string>
     <string name="btn_calculate_working">Sto calcolando...</string>
     <string name="reset">Reset</string>
+    <string name="title_activity_canvas_solve_p">Risultato - LCp</string>
 </resources>
