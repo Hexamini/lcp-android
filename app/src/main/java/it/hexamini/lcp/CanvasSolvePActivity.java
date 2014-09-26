@@ -1,6 +1,7 @@
 package it.hexamini.lcp;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -23,16 +24,18 @@ public class CanvasSolvePActivity extends ActionBarActivity {
         Solve solution = new Solve( seqSx, seqDx );
         Tree treeSolve = solution.treeLeaf();
 
-        Tree.Nodo n = treeSolve.getRadice();
-
-        System.out.println( n.treeSX.info.getPredicate() + " " + n.treeSX.info.getRule() );
-
-        TextView t = new TextView( this );
-
-        t.setTextSize(20);
-        t.setText(seqSx + " " + seqDx);
-
-        setContentView(t);
+        //disegno le stringhe sullo schermo partendo dall'angolo in basso a sinsitra
+        drawSolveSolution(treeSolve);
+        /**TextView t = new TextView( this );
+         *
+         * .::Gli oggetti devono essere presenti anche in activity_canvas_solve_p.xml
+         *    Così si perde la corrispondenza con l'editor! Poi impazziamo a trovare i glich grafici
+         *
+         *t.setTextSize(20);
+         *t.setText(seqSx + " " + seqDx);
+         *
+         *setContentView(t);
+         */
     }
 
 
@@ -53,5 +56,18 @@ public class CanvasSolvePActivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void drawSolveSolution(Tree sol){
+        /** Questa funzione stampa l'albero sullo schermo. Bisogna partire in basso a sinistra e
+         * spostarsi in alto a ogni ricorsione. Bisogna spostarsi lateralmente per ogni ramo che si
+         * va a stampare o si potrebbe sovrascrivere stringe già scritte.
+         */
+        Tree.Nodo n = sol.getRadice();
+
+        //Questa andrà stampata nello schermo
+        System.out.println( n.treeSX.info.getPredicate() + " " + n.treeSX.info.getRule() );
+
+        //Manca la ricosione
     }
 }
