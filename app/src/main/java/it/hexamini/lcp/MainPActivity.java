@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import it.hexamini.lcp.lcputility.solve.CanvasSolvePActivity;
 import it.hexamini.lcp.lcputility.solve.check.CheckGraph;
 
 

@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".lcputility.solve.CanvasSolvePActivity"
+            android:name=".CanvasSolvePActivity"
             android:label="@string/title_activity_canvas_solve_p"
             android:parentActivityName=".MainPActivity" >
             <meta-data

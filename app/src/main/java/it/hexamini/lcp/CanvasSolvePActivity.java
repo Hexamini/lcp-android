@@ -1,4 +1,4 @@
-package it.hexamini.lcp.lcputility.solve;
+package it.hexamini.lcp;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,8 +10,6 @@ import android.widget.TextView;
 
 import it.hexamini.lcp.lcputility.solve.core.Solve;
 import it.hexamini.lcp.lcputility.solve.core.Tree;
-import it.hexamini.lcp.MainPActivity;
-import it.hexamini.lcp.R;
 
 public class CanvasSolvePActivity extends ActionBarActivity {
 
@@ -26,7 +24,7 @@ public class CanvasSolvePActivity extends ActionBarActivity {
         Solve solution = new Solve( seqSx, seqDx );
         Tree treeSolve = solution.treeLeaf();
 
-        System.out.println( treeSolve.getFirstSeq() );
+        System.out.println(treeSolve.getFirstSeq());
 
         TextView t = new TextView( this );
 
