@@ -1,5 +1,6 @@
 package it.hexamini.lcp;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -8,14 +9,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
-import it.hexamini.lcp.lcputility.solve.Tree;
+import java.io.IOException;
+import java.io.Serializable;
+
+import it.hexamini.lcp.lcputility.solve.CanvasSolvePActivity;
 import it.hexamini.lcp.lcputility.solve.check.CheckGraph;
-import it.hexamini.lcp.lcputility.solve.Solve;
+import it.hexamini.lcp.lcputility.solve.core.Solve;
 
 
 public class MainPActivity extends ActionBarActivity{
+
+    public final static String PARAM_SEQUENTS_SX = "it.hexamini.lcp.PARAM_SEQUENTS_SX";
+    public final static String PARAM_SEQUENTS_DX = "it.hexamini.lcp.PARAM_SEQUENTS_DX";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +69,12 @@ public class MainPActivity extends ActionBarActivity{
                 if (controlInput.isCorrect(inputSeqDx)) {
                     //gli input sono corretti e si passa alla vera computazione del sequente
                     changeButtonText(R.id.btn_calculate_button, R.string.btn_calculate_working); //cambio il testo del bottone
-                    //Dichiaro l'oggetto solve
-                    Solve solution=new Solve(inputSeqSx, inputSeqDx);
-                    //Nuovo thread activity e nuovo tread per solution.treeLeaf
+
+                    Intent intent = new Intent( this, CanvasSolvePActivity.class );
+                    intent.putExtra( PARAM_SEQUENTS_SX, inputSeqSx );
+                    intent.putExtra( PARAM_SEQUENTS_DX, inputSeqDx );
+
+                    startActivity( intent );
                 } else
                     changeEditTextColor(R.id.seqDx, "#ff0000"); //coloro l'edittext di rosso
             } else

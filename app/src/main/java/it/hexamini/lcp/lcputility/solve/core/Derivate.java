@@ -1,4 +1,4 @@
-package it.hexamini.lcp.lcputility.solve;
+package it.hexamini.lcp.lcputility.solve.core;
 
 public class Derivate
 {
@@ -6,7 +6,6 @@ public class Derivate
     private String rule;
     /**
      * @param a : parte sinistra del sequente
-     * @param b : parte destra del sequente
      */
     public Derivate( String a )
     {
@@ -16,9 +15,9 @@ public class Derivate
     /**
      * @return Stampa a video la regola affiancata dal sequente
      */
-    public void print()
+    public String getInformation()
     {
-        System.out.println( predicate + " {" + rule + '}' );
+        return predicate + " " + rule;
     }
     /**
      * @param ruleUse : setta come regola utilizzata per derivare il sequente il contenuto di <i>ruleUse</i>

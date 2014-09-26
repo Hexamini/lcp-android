@@ -1,11 +1,16 @@
-package it.hexamini.lcp.lcputility.solve;
+package it.hexamini.lcp.lcputility.solve.core;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-public class Tree
+
+public class Tree implements Serializable
 {
+    private static final long serialVersionUID = 1L;
+
     //Nodo utilizzati in questo istante dai thread
     private ArrayList<Nodo> workingNode;
     private Nodo radice;
+
     private class Nodo
     {
         private Derivate info;
@@ -39,6 +44,7 @@ public class Tree
         workingNode = new ArrayList<Nodo>();
         workingNode.add( radice );
     }
+
     /**
      * @param seq : sequente da inserire nel campo info del nodo
      * @param idWorker : id del thread che lavora a quel ramo dell'albero
@@ -83,7 +89,6 @@ public class Tree
     }
     /**
      *
-     * @param idWorker : id del lavoratore che puntera alla radice
      * @return Rimuove tutti i puntatori ai nodi e setta il primo sul nodo radice
      */
     public void reset()
@@ -91,30 +96,10 @@ public class Tree
         workingNode.clear();
         workingNode.add( 0, radice );
     }
-    /**
-     * @return Visualizza il contenuto dei nodi dell'albero
-     */
-    public void stampa()
+
+
+    public String getFirstSeq()
     {
-        Nodo rSx = radice.treeSX;
-        Nodo rDx = radice.treeDX;
-//Stampa derivazione sequente
-        stampaRic( rSx );
-//Stampa derivazione sequente negato
-        stampaRic( rDx );
-    }
-    /**
-     *
-     * @param r : radice dell'albero
-     * @return Scorre l'albero ricorsivamente stampanto il contenuto dei nodi
-     */
-    private void stampaRic( Nodo r )
-    {
-        if( r != null )
-        {
-            r.info.print();
-            stampaRic( r.treeSX );
-            stampaRic( r.treeDX );
-        }
+        return radice.info.getInformation();
     }
 }

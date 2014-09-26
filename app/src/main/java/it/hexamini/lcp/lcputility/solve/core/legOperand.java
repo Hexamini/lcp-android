@@ -1,4 +1,4 @@
-package it.hexamini.lcp.lcputility.solve;
+package it.hexamini.lcp.lcputility.solve.core;
 
 /**
  *
