@@ -11,11 +11,11 @@ public class Tree implements Serializable
     private ArrayList<Nodo> workingNode;
     private Nodo radice;
 
-    private class Nodo
+    public class Nodo
     {
-        private Derivate info;
-        private Nodo treeDX;
-        private Nodo treeSX;
+        public Derivate info;
+        public Nodo treeDX;
+        public Nodo treeSX;
         /**
          * @param a : contenuto del nodo, sequente piu' regola
          * @param b : sequente derivato
@@ -79,6 +79,13 @@ public class Tree implements Serializable
         workingNode.add( idDxWorker, workingNode.get( idSxWorker ) );
     }
     /**
+     * @return Restituisce il nodo radice dell'albero
+     */
+    public Nodo getRadice()
+    {
+        return radice;
+    }
+    /**
      * @param rule : regola applicata da inserire nel campo info del nodo
      * @param idWorker : id del thread che lavora a quel nodo dell'albero
      */
@@ -95,11 +102,5 @@ public class Tree implements Serializable
     {
         workingNode.clear();
         workingNode.add( 0, radice );
-    }
-
-
-    public String getFirstSeq()
-    {
-        return radice.info.getInformation();
     }
 }

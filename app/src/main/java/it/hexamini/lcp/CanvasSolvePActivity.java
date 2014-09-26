@@ -1,7 +1,6 @@
 package it.hexamini.lcp;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -24,7 +23,9 @@ public class CanvasSolvePActivity extends ActionBarActivity {
         Solve solution = new Solve( seqSx, seqDx );
         Tree treeSolve = solution.treeLeaf();
 
-        System.out.println(treeSolve.getFirstSeq());
+        Tree.Nodo n = treeSolve.getRadice();
+
+        System.out.println( n.treeSX.info.getPredicate() + " " + n.treeSX.info.getRule() );
 
         TextView t = new TextView( this );
 

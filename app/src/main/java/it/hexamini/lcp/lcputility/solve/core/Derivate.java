@@ -13,11 +13,18 @@ public class Derivate
         rule = new String();
     }
     /**
-     * @return Stampa a video la regola affiancata dal sequente
+     * @return Restituisce la stringa del predicato
      */
-    public String getInformation()
+    public String getPredicate()
     {
-        return predicate + " " + rule;
+        return predicate;
+    }
+    /**
+     * @return Restituisce la stringa della regola
+     */
+    public String getRule()
+    {
+        return rule;
     }
     /**
      * @param ruleUse : setta come regola utilizzata per derivare il sequente il contenuto di <i>ruleUse</i>
