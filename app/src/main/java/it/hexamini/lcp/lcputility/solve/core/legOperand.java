@@ -39,10 +39,10 @@ public class legOperand
         int cntSquare = 0;
         do
         {
-            if( tmpPredicate.charAt( indexEnd ) == ')' ) cntSquare--;
-            else if( tmpPredicate.charAt( indexEnd ) == '(' ) cntSquare++;
+            if( tmpPredicate.charAt( indexEnd ) == ')' || tmpPredicate.charAt( indexEnd ) == ']' ) cntSquare--;
+            else if( tmpPredicate.charAt( indexEnd ) == '(' || tmpPredicate.charAt( indexEnd ) == '[' ) cntSquare++;
             indexEnd++;
-        } while( cntSquare > 0 );
+        } while( cntSquare != 0 );
         return indexEnd;
     }
     /**
@@ -59,10 +59,10 @@ public class legOperand
         if( indexStart < 0 ) return 0;
         do
         {
-            if( tmpPredicate.charAt( indexStart ) == '(' ) cntSquare--;
-            else if( tmpPredicate.charAt( indexStart ) == ')' ) cntSquare++;
+            if( tmpPredicate.charAt( indexStart ) == ')' || tmpPredicate.charAt( indexStart ) == ']' ) cntSquare--;
+            else if( tmpPredicate.charAt( indexStart ) == '(' || tmpPredicate.charAt( indexStart ) == '[' ) cntSquare++;
             indexStart--;
-        } while( cntSquare > 0 );
+        } while( cntSquare != 0 );
         return indexStart + 1;
     }
     /**
@@ -102,8 +102,8 @@ il suo operando
         String arg = tmpPredicate.substring( indStart, indEnd );
 //Il restante del sequente dopo l'operando
         String postArg = tmpPredicate.substring( indEnd );
-        preArg += '(';
-        postArg = ')' + postArg;
+        preArg += '[';
+        postArg = ']' + postArg;
         tmpPredicate = preArg + arg + postArg;
     }
     /**
