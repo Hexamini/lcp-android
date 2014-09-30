@@ -13,7 +13,7 @@ public class Tree implements Serializable
 
     public class Nodo
     {
-        public Derivate info;
+        private Derivate info;
         public Nodo treeDX;
         public Nodo treeSX;
         /**
@@ -27,6 +27,23 @@ public class Tree implements Serializable
             treeSX = b;
             treeDX = c;
         }
+
+        /**
+         * @return Restituisce sotto forma di String il predicato inserito nel nodo
+         */
+        public String getPredicate()
+        {
+            return info.predicate;
+        }
+
+        /**
+         * @return Restituisce sotto forma di String la regola inserita nel nodo
+         */
+        public String getRule()
+        {
+            return info.rule;
+        }
+
         /**
          * @param rule : scrivi nel campo info la regola utilizzata per derivare il sequente
          */
