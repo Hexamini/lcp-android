@@ -23,7 +23,9 @@ public class CanvasSolve extends View
     private int DISPLAY_HEIGHT = 0;
     private int INCREMENT_Y = 5;
     private int MARGIN_BETWEEN_SEQS = 100;
+    private int MARGIN_RULE = 10;
     private int MARGIN_BOTTOM = 200;
+    private int RULE_SIZE = 16;
     private int TEXT_SIZE = 20;
 
     private int MARGIN_UP_SEQS = INCREMENT_Y + TEXT_SIZE;
@@ -59,6 +61,7 @@ public class CanvasSolve extends View
         treeSequents = solution.treeLeaf();
 
         paint = new Paint();
+        paint.setFlags( Paint.ANTI_ALIAS_FLAG );
     }
 
     @Override
@@ -66,9 +69,9 @@ public class CanvasSolve extends View
     {
         super.onDraw(canvas);
 
-        Tree.Nodo pointerNodo = treeSequents.getRadice().treeSX;
+        Tree.Nodo treeSeq = treeSequents.getRadice().treeSX;
 
-        String firstSeq = pointerNodo.getPredicate();
+        String firstSeq = treeSeq.getPredicate();
 
         float centerX = ( DISPLAY_WIDTH / 2 );
         float centerY = DISPLAY_HEIGHT - MARGIN_BOTTOM;
@@ -77,33 +80,57 @@ public class CanvasSolve extends View
         paint.setTextSize( TEXT_SIZE );
 
         canvas.drawText( firstSeq, centerX - paint.measureText( firstSeq ) / 2, centerY, paint );
+        displayTree( treeSeq, centerX, centerY, canvas );
+    }
 
-        if( pointerNodo.treeSX != null )
+    private void displayTree( Tree.Nodo p, float centerX, float centerY, Canvas canvas )
+    {
+        if( p.treeSX != null )
         {
-            String prSx = pointerNodo.treeSX.getPredicate();
+            String prSx = p.treeSX.getPredicate();
+            String rule = p.getRule();
 
             float lenghtLine = paint.measureText( prSx );
 
-            if( pointerNodo.treeDX != null )
+            if( p.treeDX != null )
             {
-                String prDx = pointerNodo.treeDX.getPredicate();
+                String prDx = p.treeDX.getPredicate();
 
                 lenghtLine += MARGIN_BETWEEN_SEQS + paint.measureText( prDx );
 
                 canvas.drawLine( centerX - lenghtLine / 2, centerY - MARGIN_UP_SEQS, centerX + lenghtLine / 2, centerY - MARGIN_UP_SEQS, paint  );
                 canvas.drawText( prSx, centerX - lenghtLine / 2, centerY - MARGIN_UP_SEQS - 2 * INCREMENT_Y, paint );
                 canvas.drawText( prDx, centerX + MARGIN_BETWEEN_SEQS / 2, centerY - MARGIN_UP_SEQS - 2 * INCREMENT_Y, paint );
+
+                paint.setTextSize( RULE_SIZE );
+                canvas.drawText( rule, centerX + lenghtLine / 2 + MARGIN_RULE, centerY - MARGIN_UP_SEQS + RULE_SIZE / 4, paint  );
+
+                paint.setTextSize( TEXT_SIZE );
+
+                //Nuovo centro ramo sinistro
+                float centerXS = centerX - lenghtLine / 4;
+                float centerYS = centerY - MARGIN_UP_SEQS - 2 * INCREMENT_Y;
+                displayTree( p.treeSX, centerXS, centerYS, canvas );
+
+                //Nuovo centro ramo destro
+                float centerXD = centerX + lenghtLine / 4;
+                float centerYD = centerY - MARGIN_UP_SEQS - 2 * INCREMENT_Y;
+                displayTree( p.treeDX, centerXD, centerYD, canvas );
             }
             else
             {
-                canvas.drawLine( centerX - MARGIN_BETWEEN_SEQS, centerY - MARGIN_UP_SEQS, centerX - MARGIN_BETWEEN_SEQS + lenghtLine, centerY - MARGIN_UP_SEQS, paint  );
-                canvas.drawText( prSx, centerX, centerY - INCREMENT_Y, paint );
+                canvas.drawLine( centerX - lenghtLine / 2, centerY - MARGIN_UP_SEQS, centerX + lenghtLine / 2, centerY - MARGIN_UP_SEQS, paint );
+                canvas.drawText( prSx, centerX - lenghtLine / 2, centerY - MARGIN_UP_SEQS - 2 * INCREMENT_Y, paint );
+
+                paint.setTextSize( RULE_SIZE );
+                canvas.drawText( rule, centerX + lenghtLine / 2 + MARGIN_RULE, centerY - MARGIN_UP_SEQS + RULE_SIZE / 4, paint  );
+
+                paint.setTextSize( TEXT_SIZE );
+
+                //Nuovo centro ramo sinistro
+                centerY -= MARGIN_UP_SEQS + 2 * INCREMENT_Y;
+                displayTree( p.treeSX, centerX, centerY, canvas );
             }
         }
-    }
-
-    private float posText( float center, int dir, String text )
-    {
-        return center + dir * ( paint.measureText( text ) / 2 + MARGIN_BETWEEN_SEQS );
     }
 }
