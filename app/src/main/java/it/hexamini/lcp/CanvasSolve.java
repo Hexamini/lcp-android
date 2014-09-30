@@ -21,7 +21,12 @@ public class CanvasSolve extends View
 {
     private int DISPLAY_WIDTH = 0;
     private int DISPLAY_HEIGHT = 0;
-    private int MARGIN_BOTTOM = 0;
+    private int INCREMENT_Y = 5;
+    private int MARGIN_BETWEEN_SEQS = 100;
+    private int MARGIN_BOTTOM = 200;
+    private int TEXT_SIZE = 20;
+
+    private int MARGIN_UP_SEQS = INCREMENT_Y + TEXT_SIZE;
 
     private Paint paint;
 
@@ -50,10 +55,6 @@ public class CanvasSolve extends View
             DISPLAY_HEIGHT = size.y;
         }
 
-        System.out.println( DISPLAY_WIDTH + " " + DISPLAY_HEIGHT );
-
-        MARGIN_BOTTOM = 200;
-
         Solve solution = new Solve( seqSx, seqDx );
         treeSequents = solution.treeLeaf();
 
@@ -65,14 +66,44 @@ public class CanvasSolve extends View
     {
         super.onDraw(canvas);
 
+        Tree.Nodo pointerNodo = treeSequents.getRadice().treeSX;
 
+        String firstSeq = pointerNodo.getPredicate();
 
-        float centerX = ( DISPLAY_WIDTH / 2 ) - paint.measureText( treeSequents.getRadice().treeSX.info.getPredicate() );
+        float centerX = ( DISPLAY_WIDTH / 2 );
         float centerY = DISPLAY_HEIGHT - MARGIN_BOTTOM;
 
         paint.setColor( Color.BLACK );
-        paint.setTextSize( 20 );
+        paint.setTextSize( TEXT_SIZE );
 
-        canvas.drawText( treeSequents.getRadice().treeSX.info.getPredicate(), centerX, centerY, paint );
+        canvas.drawText( firstSeq, centerX - paint.measureText( firstSeq ) / 2, centerY, paint );
+
+        if( pointerNodo.treeSX != null )
+        {
+            String prSx = pointerNodo.treeSX.getPredicate();
+
+            float lenghtLine = paint.measureText( prSx );
+
+            if( pointerNodo.treeDX != null )
+            {
+                String prDx = pointerNodo.treeDX.getPredicate();
+
+                lenghtLine += MARGIN_BETWEEN_SEQS + paint.measureText( prDx );
+
+                canvas.drawLine( centerX - lenghtLine / 2, centerY - MARGIN_UP_SEQS, centerX + lenghtLine / 2, centerY - MARGIN_UP_SEQS, paint  );
+                canvas.drawText( prSx, centerX - lenghtLine / 2, centerY - MARGIN_UP_SEQS - 2 * INCREMENT_Y, paint );
+                canvas.drawText( prDx, centerX + MARGIN_BETWEEN_SEQS / 2, centerY - MARGIN_UP_SEQS - 2 * INCREMENT_Y, paint );
+            }
+            else
+            {
+                canvas.drawLine( centerX - MARGIN_BETWEEN_SEQS, centerY - MARGIN_UP_SEQS, centerX - MARGIN_BETWEEN_SEQS + lenghtLine, centerY - MARGIN_UP_SEQS, paint  );
+                canvas.drawText( prSx, centerX, centerY - INCREMENT_Y, paint );
+            }
+        }
+    }
+
+    private float posText( float center, int dir, String text )
+    {
+        return center + dir * ( paint.measureText( text ) / 2 + MARGIN_BETWEEN_SEQS );
     }
 }
