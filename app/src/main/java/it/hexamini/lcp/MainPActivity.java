@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import it.hexamini.lcp.lcputility.solve.check.CheckGraph;
+import it.hexamini.lcp.lcputility.check.CheckGraph;
 
 
 public class MainPActivity extends ActionBarActivity{

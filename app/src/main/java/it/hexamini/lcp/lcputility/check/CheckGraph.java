@@ -1,4 +1,4 @@
-package it.hexamini.lcp.lcputility.solve.check;
+package it.hexamini.lcp.lcputility.check;
 
 
 import java.util.ArrayList;
