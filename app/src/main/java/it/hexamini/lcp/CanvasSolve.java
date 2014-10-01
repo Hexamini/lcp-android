@@ -26,7 +26,7 @@ public class CanvasSolve extends View
     private int MARGIN_RULE = 10;
     private int MARGIN_BOTTOM = 200;
     private int RULE_SIZE = 16;
-    private int TEXT_SIZE = 20;
+    private int TEXT_SIZE = 30;
 
     private int MARGIN_UP_SEQS = INCREMENT_Y + TEXT_SIZE;
 
