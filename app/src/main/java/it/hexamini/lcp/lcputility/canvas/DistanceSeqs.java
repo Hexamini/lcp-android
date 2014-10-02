@@ -24,7 +24,7 @@ public class DistanceSeqs
     public DistanceSeqs( int distanceBase )
     {
         DISTANCE_DEFAULT = distanceBase;
-        INCREMENT_DISTANCE = 10;
+        INCREMENT_DISTANCE = 20;
         nMarginsProvided = 0;
         listCenter = new ArrayList<Float>();
         marginSeqs = new ArrayList<Integer>();
@@ -41,28 +41,19 @@ public class DistanceSeqs
     public int getDistance( float meauserTextSx, float meauserTextDx, float center ) throws ErrorDistance
     {
         //Aggiungo il centro con la linea associata se non presente
-        if( !listCenter.contains( center ) ) listCenter.add( center );
+        if( !listCenter.contains( center ) )
+        {
+            listCenter.add( center );
+            marginSeqs.add( DISTANCE_DEFAULT );
+        }
 
         nMarginsProvided++;
 
         float xPosSx = 0;
         float xPosDx = 0;
 
-        boolean applyDefault = ( marginSeqs.size() < nMarginsProvided );
-
-        //Nessun margine calcolato, primo inserito
-        if( applyDefault )
-        {
-            //Lato sinistro
-            xPosSx = center - ( meauserTextSx + DISTANCE_DEFAULT );
-            //Lato destro
-            xPosDx = center + DISTANCE_DEFAULT;
-        }
-        else
-        {
-            xPosSx = center - ( meauserTextSx + marginSeqs.get( nMarginsProvided - 1 ) );
-            xPosDx = center + marginSeqs.get( nMarginsProvided - 1 );
-        }
+        xPosSx = center - ( meauserTextSx + marginSeqs.get( nMarginsProvided - 1 ) );
+        xPosDx = center + marginSeqs.get( nMarginsProvided - 1 );
 
         int indexOverCenterSx = overCenter( meauserTextSx, xPosSx );
         int indexOverCenterDx = overCenter( meauserTextDx, xPosDx );
@@ -80,14 +71,7 @@ public class DistanceSeqs
         }
         else
         {
-            if( applyDefault )
-            {
-                //Aggiunto quello di default
-                marginSeqs.add( DISTANCE_DEFAULT );
-                return DISTANCE_DEFAULT;
-            }
-
-            else return marginSeqs.get( nMarginsProvided - 1 );
+            return marginSeqs.get( nMarginsProvided - 1 );
         }
     }
 
