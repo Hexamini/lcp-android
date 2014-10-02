@@ -102,10 +102,6 @@ public class CanvasSolve extends View
                     if( marginSx != MARGIN_BETWEEN_SEQS ) marginDx = marginSx;
                     else if( marginDx != MARGIN_BETWEEN_SEQS ) marginSx = marginDx;
 
-                    System.out.println( marginSx + " " + marginDx );
-
-                    //System.out.println( "Margini: " + marginSx + " " + marginDx + " " + level );
-
                     lenghtLine += marginSx + marginDx + paint.measureText( prDx );
 
                     canvas.drawLine( centerX - lenghtLine / 2, centerY - MARGIN_UP_SEQS, centerX + lenghtLine / 2, centerY - MARGIN_UP_SEQS, paint  );
