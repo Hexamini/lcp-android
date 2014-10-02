@@ -96,17 +96,15 @@ public class CanvasSolve extends View
 
                 try
                 {
-                    int marginSx = managerDistance.getDistance( paint.measureText( prSx ), -1, centerX  );
-                    int marginDx = managerDistance.getDistance( paint.measureText( prDx ), 1, centerX  );
+                    int margin = managerDistance.getDistance( paint.measureText( prSx ), paint.measureText( prDx ), centerX  );
 
-                    if( marginSx != MARGIN_BETWEEN_SEQS ) marginDx = marginSx;
-                    else if( marginDx != MARGIN_BETWEEN_SEQS ) marginSx = marginDx;
+                    System.out.println( "Main: " + level + " " + margin );
 
-                    lenghtLine += marginSx + marginDx + paint.measureText( prDx );
+                    lenghtLine += 2 * margin + paint.measureText( prDx );
 
                     canvas.drawLine( centerX - lenghtLine / 2, centerY - MARGIN_UP_SEQS, centerX + lenghtLine / 2, centerY - MARGIN_UP_SEQS, paint  );
                     canvas.drawText( prSx, centerX - lenghtLine / 2, centerY - MARGIN_UP_SEQS - 2 * INCREMENT_Y, paint );
-                    canvas.drawText( prDx, centerX + marginDx, centerY - MARGIN_UP_SEQS - 2 * INCREMENT_Y, paint );
+                    canvas.drawText( prDx, centerX + margin, centerY - MARGIN_UP_SEQS - 2 * INCREMENT_Y, paint );
 
                     paint.setTextSize( RULE_SIZE );
                     canvas.drawText( rule, centerX + lenghtLine / 2 + MARGIN_RULE, centerY - MARGIN_UP_SEQS + RULE_SIZE / 4, paint  );
@@ -114,17 +112,18 @@ public class CanvasSolve extends View
                     paint.setTextSize( TEXT_SIZE );
 
                     //Nuovo centro ramo sinistro
-                    float centerXS = centerX - ( paint.measureText( prSx ) / 2 + marginSx );
+                    float centerXS = centerX - ( paint.measureText( prSx ) / 2 + margin );
                     float centerYS = centerY - MARGIN_UP_SEQS - 2 * INCREMENT_Y;
                     displayTree( p.treeSX, centerXS, centerYS, canvas, level );
 
                     //Nuovo centro ramo destro
-                    float centerXD = centerX + ( paint.measureText( prDx ) / 2 + marginDx );
+                    float centerXD = centerX + ( paint.measureText( prDx ) / 2 + margin );
                     float centerYD = centerY - MARGIN_UP_SEQS - 2 * INCREMENT_Y;
                     displayTree( p.treeDX, centerXD, centerYD, canvas, level );
                 }
                 catch( ErrorDistance e )
                 {
+                    //Esco dalla ricorsione e ricomincio da capo
                     managerDistance.rewindStart();
                     setDisplayTree( canvas );
                 }

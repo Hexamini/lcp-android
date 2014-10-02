@@ -24,50 +24,55 @@ public class DistanceSeqs
     public DistanceSeqs( int distanceBase )
     {
         DISTANCE_DEFAULT = distanceBase;
-        INCREMENT_DISTANCE = 50;
+        INCREMENT_DISTANCE = 10;
         nMarginsProvided = 0;
         listCenter = new ArrayList<Float>();
         marginSeqs = new ArrayList<Integer>();
     }
 
     /**
-     * @param meauserText : Lunghezza del sequente
-     * @param direction : Vale -1 se è il ramo sinistro e 1 se il ramo destro
+     * @param meauserTextSx : Lunghezza del sequente sinistro
+     * @param meauserTextDx : Lunghezza del sequente destro
      * @param center : Centro del sequente da voler inserito
      * @return : Ritorna la distanza tra i sequenti dello stesso livello di derivazione
      * @throws ErrorDistance : In caso di superamento del centro di un livello di derivazione,
      *                         viene invocata l'eccezzione ErrorDistance
      */
-    public int getDistance( float meauserText, int direction, float center ) throws ErrorDistance
+    public int getDistance( float meauserTextSx, float meauserTextDx, float center ) throws ErrorDistance
     {
-        //Aggiungo il centro con la linea associata
+        //Aggiungo il centro con la linea associata se non presente
         if( !listCenter.contains( center ) ) listCenter.add( center );
 
         nMarginsProvided++;
 
-        float xPos = 0;
+        float xPosSx = 0;
+        float xPosDx = 0;
+
         boolean applyDefault = ( marginSeqs.size() < nMarginsProvided );
 
         //Nessun margine calcolato, primo inserito
         if( applyDefault )
         {
             //Lato sinistro
-            if( direction == -1 ) xPos = center + direction * ( meauserText + DISTANCE_DEFAULT );
+            xPosSx = center - ( meauserTextSx + DISTANCE_DEFAULT );
             //Lato destro
-            else xPos = center + direction * DISTANCE_DEFAULT;
+            xPosDx = center + DISTANCE_DEFAULT;
         }
         else
         {
-            //System.out.println( marginSeqs.size() + " " + marginSeqs.get( nMarginsProvided - 1 ) + " " + nMarginsProvided );
-
-            if( direction == -1 ) xPos = center + direction * ( meauserText + marginSeqs.get( nMarginsProvided - 1 ) );
-            else xPos = center + direction * marginSeqs.get( nMarginsProvided - 1 );
+            xPosSx = center - ( meauserTextSx + marginSeqs.get( nMarginsProvided - 1 ) );
+            xPosDx = center + marginSeqs.get( nMarginsProvided - 1 );
         }
 
-        int indexOverCenter = overCenter( meauserText, xPos );
+        int indexOverCenterSx = overCenter( meauserTextSx, xPosSx );
+        int indexOverCenterDx = overCenter( meauserTextDx, xPosDx );
 
-        if( indexOverCenter != -1 )
+        if( indexOverCenterSx != -1 || indexOverCenterDx != -1 )
         {
+            int indexOverCenter = ( indexOverCenterSx != -1 ) ? indexOverCenterSx : indexOverCenterDx;
+
+            System.out.println( indexOverCenter + " " + marginSeqs.get( indexOverCenter )  );
+
             marginSeqs.set( indexOverCenter, marginSeqs.get( indexOverCenter ) + INCREMENT_DISTANCE );
             //Rimuovo tutti i centri
             listCenter.clear();
@@ -105,10 +110,8 @@ public class DistanceSeqs
         boolean foundAcross = false;
 
         int indListCenter = 0;
-        //Escluso l'ultimo perchè risulterà sempre superato dato che ci scrivo sopra
+        //Escluso l'ultimo dato che ci scrivo sopra
         int lenghtListCenter = listCenter.size() - 1;
-
-        //System.out.println( meauser + " " + xPos + " " + listCenter.get( indListCenter )  );
 
         while( indListCenter < lenghtListCenter && !foundAcross )
         {
