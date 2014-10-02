@@ -1,4 +1,4 @@
-package it.hexamini.lcp;
+package it.hexamini.lcp.lcputility.canvas;
 
 /**
  * Created by Andrea on 26/09/2014.
@@ -14,10 +14,6 @@ import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 
-import java.util.ArrayList;
-
-import it.hexamini.lcp.lcputility.canvas.DistanceSeqs;
-import it.hexamini.lcp.lcputility.canvas.ErrorDistance;
 import it.hexamini.lcp.lcputility.solve.core.Solve;
 import it.hexamini.lcp.lcputility.solve.core.Tree;
 
