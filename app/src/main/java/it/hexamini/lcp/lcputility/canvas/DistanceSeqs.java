@@ -46,9 +46,10 @@ public class DistanceSeqs
         nMarginsProvided++;
 
         float xPos = 0;
+        boolean applyDefault = ( marginSeqs.size() < nMarginsProvided );
 
         //Nessun margine calcolato, primo inserito
-        if( marginSeqs.size() < nMarginsProvided )
+        if( applyDefault )
         {
             //Lato sinistro
             if( direction == -1 ) xPos = center + direction * ( meauserText + DISTANCE_DEFAULT );
@@ -74,7 +75,7 @@ public class DistanceSeqs
         }
         else
         {
-            if( marginSeqs.size() < nMarginsProvided )
+            if( applyDefault )
             {
                 //Aggiunto quello di default
                 marginSeqs.add( DISTANCE_DEFAULT );
