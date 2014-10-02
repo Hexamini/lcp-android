@@ -29,7 +29,7 @@ public class CanvasSolve extends View
     private int DISPLAY_HEIGHT = 0;
     private int INCREMENT_Y = 5;
     private int MARGIN_RULE = 10;
-    private int MARGIN_BETWEEN_SEQS = 30;
+    private int MARGIN_BETWEEN_SEQS = 20;
     private int MARGIN_BOTTOM = 200;
     private int RULE_SIZE = 14;
     private int TEXT_SIZE = 20;
