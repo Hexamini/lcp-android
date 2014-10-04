@@ -9,4 +9,6 @@
     <string name="btn_calculate_working">Sto calcolando...</string>
     <string name="reset">Reset</string>
     <string name="title_activity_canvas_solve_p">Risultato - LCp</string>
+    <string name="btn_calculate_intro">Premendo questo bottone il sequente verrà calcolato da LCp</string>
+    <string name="btn_reset_intro">Con questo bottone puoi cancellare i tuoi input e far tornare tutto come nuovo!</string>
 </resources>

@@ -7,23 +7,64 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 
 import it.hexamini.lcp.lcputility.check.CheckGraph;
+import com.github.amlcurran.showcaseview.*;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
+
+/**Importo tutto il necessario per la creazione del
+ * help al primo avvio dell'app
+ */
 
 
-public class MainPActivity extends ActionBarActivity{
+public class MainPActivity extends ActionBarActivity implements View.OnClickListener,OnShowcaseEventListener, AdapterView.OnItemClickListener{
 
     public final static String PARAM_SEQUENTS_SX = "it.hexamini.lcp.PARAM_SEQUENTS_SX";
     public final static String PARAM_SEQUENTS_DX = "it.hexamini.lcp.PARAM_SEQUENTS_DX";
+    private ShowcaseView firstRun; //la devo dichiarare qui perchè viene usata da onClick.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_p);
+        firstRunIntroduction();
     }
 
+    @Override
+    public void onClick(View view) {
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+    }
+
+    @Override
+    public void onShowcaseViewShow(ShowcaseView showcaseView) {
+        //setto il bottone calcola e reset non cliccabili
+        setClickable(false, R.id.btn_calculate_button);
+        setClickable(false, R.id.reset_button);
+    }
+
+    @Override
+    public void onShowcaseViewHide(ShowcaseView showcaseView) {
+    }
+
+    @Override
+    public void onShowcaseViewDidHide (ShowcaseView showcaseView) {
+        setClickable(true, R.id.reset_button);
+        setClickable(true, R.id.btn_calculate_button);
+        //faccio partire la slide successiva
+        secondSlide();
+
+        /**
+         * NOTA: Non riesco a capire il perchè, ma sbloccando prima i bottoni reset eppoi
+         * chiamando la seconda slide sequenza viene invertita. Probabilmente sarà un bug
+         * della libreria.
+         */
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -101,4 +142,43 @@ public class MainPActivity extends ActionBarActivity{
         //cambio il testo del bottone con quello passato nella variabile idText
         changeName.setText(idText);
     }
+
+    private void firstRunIntroduction(){
+        //mi fa l'animazione del primo avvio
+        firstSlide();
+        //la seconda slide viene avviata da onShowcaseViewDidHide
+    }
+
+    private void firstSlide(){
+        ViewTarget calculateButtonTarget= new ViewTarget(R.id.btn_calculate_button, this);
+        firstRun= new ShowcaseView.Builder(this, true)
+                .setTarget(calculateButtonTarget)
+                .setContentTitle(R.string.calculate_result) //titolo del testo
+                .setContentText(R.string.btn_calculate_intro) //testo introduttivo
+                .doNotBlockTouches() //impedisce il touch se non sull'ok e sul bottone
+                .setStyle(R.style.AppTheme) //tema dell'intro
+                .setShowcaseEventListener(this)
+                .singleShot(R.id.btn_calculate_button) //visualizzato solamente al primo avvio
+                .build();
+    }
+
+    private void secondSlide(){
+        ViewTarget resetButtonTarget= new ViewTarget(R.id.reset_button, this);
+        firstRun=new ShowcaseView.Builder(this, true)
+                .setTarget(resetButtonTarget)
+                .setContentTitle(R.string.reset) //titolo del testo
+                .setContentText(R.string.btn_reset_intro) //testo introduttivo
+                .doNotBlockTouches() //impedisce il touch se non sull'ok e sul bottone
+                .setStyle(R.style.AppTheme) //tema dell'intro
+                .setShowcaseEventListener(this)
+                .singleShot(R.id.reset_button) //visualizzato solamente al primo avvio
+                .build();
+    }
+
+    private void setClickable(boolean mode,int id){
+        //cambia lo stato di un bottone da cliccabile o no
+        Button setClickable= (Button) findViewById(id);
+        setClickable.setEnabled(mode);
+    }
+
 }
