@@ -11,8 +11,8 @@ public class TreeMargin
 {
     public class Nodo
     {
-        public final float LENGHT_DX;
-        public final float LENGHT_SX;
+        public float lenghtSx;
+        public float lenghtDx;
         public float margin;
         public float relativeCenter;
 
@@ -22,30 +22,22 @@ public class TreeMargin
         /**
          *
          * @param c : Poszione asse centrale
-         * @param lSx : Lunghezza del sequente sinistro
-         * @param lDx : Lunghezza del sequente destro
          * @param m : Margine tra i due sequenti
          */
-        public Nodo( float c, float lSx, float lDx, float m  )
+        public Nodo( float c, float m  )
         {
             relativeCenter = c;
-            LENGHT_SX = lSx;
-            LENGHT_DX = lDx;
+            lenghtSx = 0;
+            lenghtDx = 0;
             margin = m;
 
             treeDX = null;
             treeSX = null;
         }
-
-        public float[] getMeasures()
-        {
-            return new float[]{ margin, LENGHT_SX, LENGHT_DX, relativeCenter };
-        }
     }
 
     private final int INCREMENT_MARGIN;
     //Larghezza della linea del centro
-    private final int DELTA;
     private final int MARGIN_BETWEEN;
 
     private Nodo radice;
@@ -61,8 +53,7 @@ public class TreeMargin
      */
     public TreeMargin( Tree.Nodo radiceTree, int setDistance, Paint paintContext )
     {
-        INCREMENT_MARGIN = 10;
-        DELTA = 0;
+        INCREMENT_MARGIN = 40;
         MARGIN_BETWEEN = setDistance;
 
         paint = paintContext;
@@ -74,7 +65,6 @@ public class TreeMargin
         applicato e' il valore di MARGIN_BETWEEN
         */
         radice = setDefaultMarginTree( treeDerivateRadice, 0 );
-
         /*
         Con i margini impostati a default c'e' il rischio di sovrapposizione
         dei rami e quindi e' necessario incrementare la loro distanza
@@ -108,14 +98,23 @@ public class TreeMargin
         if( matcher != null && matcher != pattern )
         {
             //Punti di estremo sinistro e destro
-            float ptExtremeSx = pattern.relativeCenter -
-                                ( pattern.margin / 2 + pattern.LENGHT_SX );
-            float ptExtremeDx = pattern.relativeCenter +
-                                ( pattern.margin / 2 + pattern.LENGHT_DX );
+            float ptStartSx = pattern.relativeCenter -
+                              ( pattern.margin / 2 + pattern.lenghtSx );
+            float ptEndSx = pattern.relativeCenter - pattern.margin / 2;
+            float ptStartDx = pattern.relativeCenter + pattern.margin / 2;
+            float ptEndDx = pattern.relativeCenter +
+                            ( pattern.margin / 2 + pattern.lenghtDx );
+
+            System.out.println( ptStartDx + " " + ptEndDx + " " + matcher.relativeCenter );
+
+            boolean acrossSx = ( ptStartSx <= matcher.relativeCenter &&
+                                 ptEndSx >= matcher.relativeCenter );
+
+            boolean acrossDx = ( ptStartDx <= matcher.relativeCenter &&
+                                 ptEndDx >= matcher.relativeCenter );
 
             //Trovato centro superato
-            if( ptExtremeSx < matcher.relativeCenter + DELTA ||
-                ptExtremeDx > matcher.relativeCenter - DELTA )
+            if( acrossSx || acrossDx )
             {
                 matcher.margin += INCREMENT_MARGIN;
 
@@ -150,29 +149,29 @@ public class TreeMargin
      */
     private Nodo setDefaultMarginTree( Tree.Nodo base, float center )
     {
-        if( base.treeSX != null )
+        if( base.treeSX != null ) //Una foglia non ha bisogno di impostazioni
         {
-            if( base.treeDX == null ) return setDefaultMarginTree( base.treeSX, center );
-            else
+            Nodo data = new Nodo( center, MARGIN_BETWEEN );
+
+            //Scorri l'albero fino a trovare una biforcazione
+            while( base != null && base.treeDX == null ) base = base.treeSX;
+
+            if( base != null )
             {
                 float lenghtSeqSx = paint.measureText( base.treeSX.getPredicate() );
                 float lenghtSeqDx = paint.measureText( base.treeDX.getPredicate() );
 
-                Nodo nodoAddCenter = new Nodo( center,
-                                               lenghtSeqSx,
-                                               lenghtSeqDx,
-                                               MARGIN_BETWEEN
-                                             );
+                data.lenghtSx = lenghtSeqSx;
+                data.lenghtDx = lenghtSeqDx;
 
                 float newCenterSx = center - ( MARGIN_BETWEEN / 2 + lenghtSeqSx / 2 );
                 float newCenterDx = center + ( MARGIN_BETWEEN / 2 + lenghtSeqDx / 2 );
 
-                nodoAddCenter.treeSX = setDefaultMarginTree( base.treeSX, newCenterSx );
-
-                nodoAddCenter.treeDX = setDefaultMarginTree( base.treeDX, newCenterDx );
-
-                return nodoAddCenter;
+                data.treeSX = setDefaultMarginTree( base.treeSX, newCenterSx );
+                data.treeDX = setDefaultMarginTree( base.treeDX, newCenterDx );
             }
+
+            return data;
         }
         else return null;
     }
@@ -208,4 +207,16 @@ public class TreeMargin
             incrementChildrensCenter( children.treeDX, increment );
         }
     }
+
+    public void print( Nodo x )
+    {
+        if( x != null )
+        {
+            System.out.println( x.margin + " " + x.lenghtSx + " " + x.lenghtDx + " " + x.relativeCenter );
+            print( x.treeSX );
+            print( x.treeDX );
+        }
+
+    }
+
 }

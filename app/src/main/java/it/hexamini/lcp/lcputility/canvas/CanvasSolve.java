@@ -14,8 +14,6 @@ import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 
-import java.util.ArrayList;
-
 import it.hexamini.lcp.lcputility.solve.core.Solve;
 import it.hexamini.lcp.lcputility.solve.core.Tree;
 
@@ -67,8 +65,9 @@ public class CanvasSolve extends View
 
         paint.setTextSize( TEXT_SIZE );
 
-        managerDistance = new TreeMargin( treeSequents.getRadice(), MARGIN_BETWEEN_SEQS, paint );
-        System.out.println( "Ecco!" );
+        managerDistance = new TreeMargin( treeSequents.getRadice().treeSX,
+                                          MARGIN_BETWEEN_SEQS,
+                                          paint );
     }
 
     @Override
@@ -94,10 +93,10 @@ public class CanvasSolve extends View
             {
                 String prDx = pTree.treeDX.getPredicate();
 
-                lenghtLine += pManager.margin + pManager.LENGHT_DX;
+                lenghtLine += pManager.margin + pManager.lenghtDx;
 
                 float posSeqSx = pManager.relativeCenter -
-                                 ( pManager.margin / 2 + pManager.LENGHT_SX );
+                                 ( pManager.margin / 2 + pManager.lenghtSx );
                 float posSeqDx = pManager.relativeCenter + pManager.margin / 2;
 
                 canvas.drawLine( pManager.relativeCenter - lenghtLine / 2,
@@ -172,6 +171,8 @@ public class CanvasSolve extends View
         float centerY = DISPLAY_HEIGHT - MARGIN_BOTTOM;
 
         managerDistance.setCenter( centerX );
+
+        managerDistance.print( managerDistance.getRadice() );
 
         TreeMargin.Nodo pointerManager = managerDistance.getRadice();
 
