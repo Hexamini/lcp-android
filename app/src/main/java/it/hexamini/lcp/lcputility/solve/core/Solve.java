@@ -80,8 +80,8 @@ public class Solve implements Runnable
         indexSequent = 0;
         sx = operandPriority.addPriority( sx );
         dx = operandPriority.addPriority( dx );
-        System.out.println( sx );
-        System.out.println( dx );
+        //System.out.println( sx );
+        //System.out.println( dx );
 //Negato del sequente
         String negative = "-(";
         if( sx.isEmpty() ) negative += "[%]>";
@@ -108,7 +108,7 @@ public class Solve implements Runnable
 //Creo il sequente negato che verra' risolto dopo il sequente originale
         negSequent = new Predicate( Arrays.asList( elemNeSx ), Arrays.asList( elemNeDx ) );
         reader = true;
-        tableGroup.printAllReference();
+        //tableGroup.printAllReference();
     }
     public Tree treeLeaf()
     {
@@ -341,7 +341,7 @@ public class Solve implements Runnable
         Stack<Thread> threads = new Stack<Thread>();
         while( !isLeaf )
         {
-            System.out.println( listSx.toString() + "|-" + listDx.toString() + " " + idThread );
+            //System.out.println( listSx.toString() + "|-" + listDx.toString() + " " + idThread );
             int lastElemSx = listSx.size() - 1;
 //Stringa di servizio
             String derElem = new String();
