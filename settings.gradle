@@ -1,2 +1,2 @@
-include ':app'
-include (':libary')
+include: ':app'
+include(':libary')
