@@ -54,8 +54,8 @@ public class TreeMargin
      */
     public TreeMargin( Tree.Nodo radiceTree, int setDistance, Paint paintContext )
     {
-        INCREMENT_MARGIN = 50;
-        DELTA = 20;
+        INCREMENT_MARGIN = 10;
+        DELTA = 60;
         MARGIN_BETWEEN = setDistance;
 
         paint = paintContext;
@@ -110,12 +110,7 @@ public class TreeMargin
                                 ( pattern.margin / 2 + pattern.lenghtSx );
             float ptExtremeDx = pattern.relativeCenter +
                                 ( pattern.margin / 2 + pattern.lenghtDx );
-            /*
-            float ptExtremePSx = matcher.relativeCenter -
-                    ( matcher.margin / 2 + matcher.lenghtSx  );
-            float ptExtremePDx = matcher.relativeCenter +
-                    ( matcher.margin / 2 + matcher.lenghtDx );
-            */
+
             boolean acrossSx = ( pattern.relativeCenter > matcher.relativeCenter &&
                                  ptExtremeSx < matcher.relativeCenter + DELTA );
             boolean acrossDx = ( pattern.relativeCenter < matcher.relativeCenter &&
