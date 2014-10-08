@@ -55,7 +55,7 @@ public class TreeMargin
     public TreeMargin( Tree.Nodo radiceTree, int setDistance, Paint paintContext )
     {
         INCREMENT_MARGIN = 10;
-        DELTA = 60;
+        DELTA = 40;
         MARGIN_BETWEEN = setDistance;
 
         paint = paintContext;
@@ -68,17 +68,11 @@ public class TreeMargin
         */
         radice = setDefaultMarginTree( treeDerivateRadice, 0 );
 
-        System.out.println( "Prima" );
-        print( radice );
-
         /*
         Con i margini impostati a default c'e' il rischio di sovrapposizione
         dei rami e quindi e' necessario incrementare la loro distanza
         */
         adjustMargin( radice );
-
-        System.out.println( "Dopo" );
-        print( radice );
     }
 
     public Nodo getRadice()
@@ -102,7 +96,7 @@ public class TreeMargin
      * @return : Restituisce true se e' stato trovato un centro superato e
      *           aggiustato, altrimenti false
      */
-    private boolean foundEraseAcross( Nodo pattern, Nodo matcher )
+    private void foundEraseAcross( Nodo pattern, Nodo matcher )
     {
         if( matcher != null && matcher != pattern )
         {
@@ -130,17 +124,14 @@ public class TreeMargin
 
                 //Ricomincia la ricerca dato i nuovi parametri
                 foundEraseAcross( pattern, radice );
-
-                return true;
             }
             else
             {
-                //Scandaglia l'albero fino a trovare un centro superato o a visitare tutto l'albero
-                return( foundEraseAcross( pattern, matcher.treeSX ) ||
-                        foundEraseAcross( pattern, matcher.treeDX ) );
+                //Scandaglia l'albero
+                foundEraseAcross( pattern, matcher.treeSX );
+                foundEraseAcross( pattern, matcher.treeDX );
             }
         }
-        else return false;
     }
 
     /**
