@@ -172,7 +172,7 @@ public class CanvasSolve extends View
 
         managerDistance.setCenter( centerX );
 
-        managerDistance.print( managerDistance.getRadice() );
+        //managerDistance.print( managerDistance.getRadice() );
 
         TreeMargin.Nodo pointerManager = managerDistance.getRadice();
 

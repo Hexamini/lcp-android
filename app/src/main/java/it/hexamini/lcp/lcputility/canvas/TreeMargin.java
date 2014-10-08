@@ -37,6 +37,7 @@ public class TreeMargin
     }
 
     private final int INCREMENT_MARGIN;
+    private final int DELTA;
     //Larghezza della linea del centro
     private final int MARGIN_BETWEEN;
 
@@ -53,7 +54,8 @@ public class TreeMargin
      */
     public TreeMargin( Tree.Nodo radiceTree, int setDistance, Paint paintContext )
     {
-        INCREMENT_MARGIN = 40;
+        INCREMENT_MARGIN = 50;
+        DELTA = 20;
         MARGIN_BETWEEN = setDistance;
 
         paint = paintContext;
@@ -65,11 +67,18 @@ public class TreeMargin
         applicato e' il valore di MARGIN_BETWEEN
         */
         radice = setDefaultMarginTree( treeDerivateRadice, 0 );
+
+        System.out.println( "Prima" );
+        print( radice );
+
         /*
         Con i margini impostati a default c'e' il rischio di sovrapposizione
         dei rami e quindi e' necessario incrementare la loro distanza
         */
         adjustMargin( radice );
+
+        System.out.println( "Dopo" );
+        print( radice );
     }
 
     public Nodo getRadice()
@@ -97,21 +106,20 @@ public class TreeMargin
     {
         if( matcher != null && matcher != pattern )
         {
-            //Punti di estremo sinistro e destro
-            float ptStartSx = pattern.relativeCenter -
-                              ( pattern.margin / 2 + pattern.lenghtSx );
-            float ptEndSx = pattern.relativeCenter - pattern.margin / 2;
-            float ptStartDx = pattern.relativeCenter + pattern.margin / 2;
-            float ptEndDx = pattern.relativeCenter +
-                            ( pattern.margin / 2 + pattern.lenghtDx );
-
-            System.out.println( ptStartDx + " " + ptEndDx + " " + matcher.relativeCenter );
-
-            boolean acrossSx = ( ptStartSx <= matcher.relativeCenter &&
-                                 ptEndSx >= matcher.relativeCenter );
-
-            boolean acrossDx = ( ptStartDx <= matcher.relativeCenter &&
-                                 ptEndDx >= matcher.relativeCenter );
+            float ptExtremeSx = pattern.relativeCenter -
+                                ( pattern.margin / 2 + pattern.lenghtSx );
+            float ptExtremeDx = pattern.relativeCenter +
+                                ( pattern.margin / 2 + pattern.lenghtDx );
+            /*
+            float ptExtremePSx = matcher.relativeCenter -
+                    ( matcher.margin / 2 + matcher.lenghtSx  );
+            float ptExtremePDx = matcher.relativeCenter +
+                    ( matcher.margin / 2 + matcher.lenghtDx );
+            */
+            boolean acrossSx = ( pattern.relativeCenter > matcher.relativeCenter &&
+                                 ptExtremeSx < matcher.relativeCenter + DELTA );
+            boolean acrossDx = ( pattern.relativeCenter < matcher.relativeCenter &&
+                                 ptExtremeDx > matcher.relativeCenter - DELTA );
 
             //Trovato centro superato
             if( acrossSx || acrossDx )
@@ -125,15 +133,16 @@ public class TreeMargin
                 incrementChildrensCenter( matcher.treeSX, -INCREMENT_MARGIN / 2 );
                 incrementChildrensCenter( matcher.treeDX, INCREMENT_MARGIN / 2 );
 
+                //Ricomincia la ricerca dato i nuovi parametri
+                foundEraseAcross( pattern, radice );
+
                 return true;
             }
             else
             {
-
                 //Scandaglia l'albero fino a trovare un centro superato o a visitare tutto l'albero
                 return( foundEraseAcross( pattern, matcher.treeSX ) ||
-                        foundEraseAcross( pattern, matcher.treeDX )
-                );
+                        foundEraseAcross( pattern, matcher.treeDX ) );
             }
         }
         else return false;
