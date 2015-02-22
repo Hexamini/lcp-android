@@ -56,10 +56,12 @@ public class ReferenceTable
 //cancelletto
         return index;
     }
+    /*
     public void printAllReference()
     {
         for( int i = 0; i < size; i++ ) System.out.println( i + " " + tableRef[i].reference + " " + tableRef[i].bracketAdd );
     }
+    */
     private int alreadyInsert( String pr )
     {
         boolean found = false;

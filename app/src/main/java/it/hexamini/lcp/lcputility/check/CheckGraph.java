@@ -729,7 +729,7 @@ public class CheckGraph
         operator = new Nodo( "[&\\-\\>v]" );
         phrClose = new Nodo( "[)]" );
         phrOpen = new Nodo( "[(]");
-        variable = new Nodo( "[A-Z]" );
+        variable = new Nodo( "[A-Z@%]" );
 
         operator.addLink( phrOpen );
         operator.addLink( variable );
